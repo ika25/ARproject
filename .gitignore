@@ -58,3 +58,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+AR project/Temp/UnityLockfile
+AR project/Library/ArtifactDB
+AR project/Library/PackageCache/com.ptc.vuforia.engine@28847b1d9f/Vuforia/Plugins/iOS/Vuforia.framework/Vuforia
