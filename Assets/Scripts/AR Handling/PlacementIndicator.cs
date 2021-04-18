@@ -6,6 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 
 public class PlacementIndicator : MonoBehaviour
 {
+
     private ARRaycastManager aRRaycastManager;
     private GameObject placementIndicator;
     void Start()
@@ -33,6 +34,8 @@ public class PlacementIndicator : MonoBehaviour
 
             if (!placementIndicator.activeInHierarchy)
                 placementIndicator.SetActive(true);
+
+            
         }
     }
 }
