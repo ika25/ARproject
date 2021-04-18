@@ -21,7 +21,7 @@ public class ObjectSpawner : MonoBehaviour
 
     void Update()
     {
-        //if (!isPrefabPresent)
+        if (!isPrefabPresent)
         {
             fingerTouched = Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began;
 
