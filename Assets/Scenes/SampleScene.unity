@@ -887,7 +887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8b0cf344b0519478d32c551a985676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjToSpawn: {fileID: 3961496889605402095, guid: 11a6fd190b2bc1d4bb05fb3a48ecbca4, type: 3}
+  ScaleSlider: {fileID: 879725812}
+  ObjToSpawn: {fileID: 3647221129168828773, guid: 995298db4e5395a4695027f4c7e66c23, type: 3}
   InstantiatedPlayGround: {fileID: 0}
 --- !u!1 &1440259923
 GameObject:
@@ -918,7 +919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465dcd08c7cb35e48835ee762b5d3ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScaleSlider: {fileID: 879725812}
 --- !u!4 &1440259925
 Transform:
   m_ObjectHideFlags: 0
