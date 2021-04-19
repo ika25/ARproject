@@ -63,6 +63,7 @@ public class ObjectSpawner : MonoBehaviour
                 PlacementIndicator.gameObject.SetActive(false);
                 ShootBtn.SetActive(true);
                 InstantiatedBall = Instantiate(ballPrefab, PlacementIndicator.transform.position, PlacementIndicator.transform.rotation);
+                InstantiatedBall.transform.LookAt(InstantiatedPlayGround.transform.GetChild(0));
             }
         }
     }
