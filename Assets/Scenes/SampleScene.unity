@@ -1192,7 +1192,6 @@ MonoBehaviour:
   PlayGroundPrefab: {fileID: 3647221129168828773, guid: 995298db4e5395a4695027f4c7e66c23, type: 3}
   ballPrefab: {fileID: 2589429432591358373, guid: 460e5eb70737c1c41a8653844fdfe64a, type: 3}
   ScaleSlider: {fileID: 879725812}
-  ShootBtn: {fileID: 980416641}
   TapToPlaceBallTxt: {fileID: 284077439}
   TransparentBall: {fileID: 383468191}
   InstantiatedPlayGround: {fileID: 0}
@@ -1278,6 +1277,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1475668030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1475668032}
+  - component: {fileID: 1475668031}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1475668031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475668030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57282f22d17f06c4d8e702843d3348c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSpawner: {fileID: 1224577035}
+  ARCam: {fileID: 2006135781}
+--- !u!4 &1475668032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475668030}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.040236514, y: 0.04821531, z: -0.48770934}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1713567412
 GameObject:
   m_ObjectHideFlags: 0

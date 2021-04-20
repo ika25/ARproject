@@ -7,6 +7,6 @@ public class ThrowBall : MonoBehaviour
     public void Shoot(ObjectSpawner objectSpawner )
     {
         Rigidbody ball_rb = objectSpawner.InstantiatedBall.GetComponent<Rigidbody>();
-        ball_rb.AddForce(ball_rb.transform.forward * 4, ForceMode.Impulse);
+        ball_rb.AddForce(ball_rb.transform.forward * 5, ForceMode.Impulse);
     }
 }

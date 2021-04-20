@@ -456,6 +456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 701790818}
+  ARCam: {fileID: 40113705}
 --- !u!4 &1082641283
 Transform:
   m_ObjectHideFlags: 0

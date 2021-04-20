@@ -7,7 +7,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] GameObject PlayGroundPrefab;
     [SerializeField] GameObject ballPrefab;
     [SerializeField] GameObject ScaleSlider;
-    [SerializeField] GameObject ShootBtn;
+    //[SerializeField] GameObject ShootBtn;
     [SerializeField] GameObject TapToPlaceBallTxt;
     [SerializeField] GameObject TransparentBall;
 
@@ -19,6 +19,7 @@ public class ObjectSpawner : MonoBehaviour
     bool fingerTouched = false;
     bool isPrefabPresent = false;
     bool isBallPlaced = false;
+    bool canShoot = false;
     void Start()
     {
         PlacementIndicator = FindObjectOfType<PlacementIndicator>();
@@ -61,10 +62,32 @@ public class ObjectSpawner : MonoBehaviour
                 TransparentBall.SetActive(false);
                 TapToPlaceBallTxt.SetActive(false);
                 PlacementIndicator.gameObject.SetActive(false);
-                ShootBtn.SetActive(true);
+                //ShootBtn.SetActive(true);
                 InstantiatedBall = Instantiate(ballPrefab, PlacementIndicator.transform.position, PlacementIndicator.transform.rotation);
                 InstantiatedBall.transform.LookAt(InstantiatedPlayGround.transform.GetChild(0));
             }
         }
+        if(Input.GetMouseButtonUp(0))
+        {
+            if(isBallPlaced)
+            {
+                Invoke("delayforInput", 0.3f);
+            }
+            else
+            {
+                canShoot = false;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0) && canShoot == true)
+        {
+            InstantiatedBall.GetComponent<Rigidbody>().AddForce(InstantiatedBall.transform.forward * 4, ForceMode.Impulse);
+
+        }    
+    }
+
+    private void delayforInput()
+    {
+        canShoot = true;
     }
 }

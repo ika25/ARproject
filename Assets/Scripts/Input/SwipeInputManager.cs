@@ -5,7 +5,9 @@ using UnityEngine;
 public class SwipeInputManager : MonoBehaviour
 {
 
-    [SerializeField] Transform ball;
+    //[SerializeField] Transform ball;
+    [SerializeField] ObjectSpawner objectSpawner;
+    [SerializeField] Camera ARCam;
     Vector3 ThrowDirection;
 
 
@@ -21,16 +23,16 @@ public class SwipeInputManager : MonoBehaviour
         {
             ThrowDirection = GetSecondPoint();
 
-            ball.LookAt(ThrowDirection);
+            objectSpawner.InstantiatedBall.transform.LookAt(ThrowDirection);
         }
 
     }
     private Vector3 GetSecondPoint()
     {
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray camRay = ARCam.ScreenPointToRay(Input.mousePosition);
         if(Physics.Raycast(camRay, out RaycastHit hit))
         {
-            if(hit.collider.CompareTag("Ground"))
+            //if(hit.collider.CompareTag("Ground"))
             {
                 return hit.point;
             }
