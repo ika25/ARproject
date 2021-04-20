@@ -4,66 +4,42 @@ using UnityEngine;
 
 public class SwipeInputManager : MonoBehaviour
 {
-    Vector3 firstTouch;
-    Vector3 secondTouch;
+
+    [SerializeField] Transform ball;
+    Vector3 ThrowDirection;
 
 
-    Vector3 ScreenAxis;
-
-
-    Vector3 screenBottomCenter;
-    Vector3 ScreenTopCenter;
     void Start()
     {
-        firstTouch = Vector3.zero;
-        secondTouch = Vector3.zero;
-        screenBottomCenter = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width / 2, 0, 0));
-        ScreenTopCenter = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width / 2, Screen.height, 0));
-
-        ScreenAxis = ScreenTopCenter - screenBottomCenter;
-
-        Debug.DrawLine(screenBottomCenter,ScreenTopCenter);
+        ThrowDirection = Vector3.zero;
     }
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+
+        if(Input.GetMouseButton(0))
         {
-            firstTouch = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            ThrowDirection = GetSecondPoint();
+
+            ball.LookAt(ThrowDirection);
         }
 
-        if(Input.GetMouseButtonUp(0))
-        {
-            secondTouch = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-
-            //Debug.Log(firstTouch);
-            //Debug.Log(secondTouch);
-
-        }
-
-        Debug.DrawLine(firstTouch, secondTouch);
     }
-
-    private Vector3 GetThrowDirection()
+    private Vector3 GetSecondPoint()
     {
-        Vector3 dir = (secondTouch - firstTouch).normalized;
-
-        return dir;
+        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(camRay, out RaycastHit hit))
+        {
+            if(hit.collider.CompareTag("Ground"))
+            {
+                return hit.point;
+            }
+        }
+        return Vector3.zero;
     }
-
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(screenBottomCenter,0.1f);
-        Gizmos.DrawSphere(ScreenTopCenter, 0.1f);
-
-
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(firstTouch, 0.1f);
-
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(secondTouch, 0.1f);
-
+        Gizmos.DrawSphere(ThrowDirection, 0.05f);
     }
 }
