@@ -34,8 +34,6 @@ public class PlacementIndicator : MonoBehaviour
 
             if (!placementIndicator.activeInHierarchy)
                 placementIndicator.SetActive(true);
-
-            
         }
     }
 }

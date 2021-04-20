@@ -6,39 +6,42 @@ public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] GameObject PlayGroundPrefab;
     [SerializeField] GameObject ballPrefab;
-    [SerializeField] GameObject ScaleSlider;
-    //[SerializeField] GameObject ShootBtn;
-    [SerializeField] GameObject TapToPlaceBallTxt;
     [SerializeField] GameObject TransparentBall;
+    [SerializeField] GameObject ScaleSlider;
+    [SerializeField] GameObject RotationSlider;
+    [SerializeField] GameObject TapToPlaceBallTxt;
 
     [HideInInspector]
     public GameObject InstantiatedPlayGround;
     [HideInInspector]
     public GameObject InstantiatedBall;
+
     private PlacementIndicator PlacementIndicator;
+
+    bool fingerReleased = false;
     bool fingerTouched = false;
-    bool isPrefabPresent = false;
+    bool isPlayGroundPlaced = false;
     bool isBallPlaced = false;
     bool canShoot = false;
     void Start()
     {
         PlacementIndicator = FindObjectOfType<PlacementIndicator>();
-        ScaleSlider.SetActive(false);
-
     }
 
     void Update()
     {
-        fingerTouched = Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began;
-        if (!isPrefabPresent)
+        fingerTouched = Input.GetMouseButtonDown(0); /*Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began;*/
+        fingerReleased = Input.GetMouseButtonUp(0);
+
+        if (!isPlayGroundPlaced)
         {
 
             if (fingerTouched)
             {
-                InstantiatedPlayGround = Instantiate(PlayGroundPrefab, PlacementIndicator.transform.position, PlacementIndicator.transform.rotation);
-                
-                isPrefabPresent = true;
-            } 
+                PlacePlayGround();
+
+                isPlayGroundPlaced = true;
+            }
         }
 
         else if(!isBallPlaced)
@@ -46,32 +49,22 @@ public class ObjectSpawner : MonoBehaviour
 
             if(!fingerTouched)
             {
-                if (!ScaleSlider.activeInHierarchy)
-                    ScaleSlider.SetActive(true);
-
-                if (!TransparentBall.activeInHierarchy)
-                TransparentBall.SetActive(true);
-
-                if(!TapToPlaceBallTxt.activeInHierarchy)
-                TapToPlaceBallTxt.SetActive(true);
+                ShowHints();
             }
             else
             {
+                HideHints();
+                PlaceBall();
+
                 isBallPlaced = true;
-                ScaleSlider.SetActive(false);
-                TransparentBall.SetActive(false);
-                TapToPlaceBallTxt.SetActive(false);
-                PlacementIndicator.gameObject.SetActive(false);
-                //ShootBtn.SetActive(true);
-                InstantiatedBall = Instantiate(ballPrefab, PlacementIndicator.transform.position, PlacementIndicator.transform.rotation);
-                InstantiatedBall.transform.LookAt(InstantiatedPlayGround.transform.GetChild(0));
             }
         }
-        if(Input.GetMouseButtonUp(0))
+
+        if(fingerReleased && isPlayGroundPlaced)
         {
             if(isBallPlaced)
             {
-                Invoke("delayforInput", 0.3f);
+                Invoke("SetCanShoot", 0.3f);
             }
             else
             {
@@ -79,14 +72,59 @@ public class ObjectSpawner : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0) && canShoot == true)
+        if (fingerReleased && canShoot == true)
         {
-            InstantiatedBall.GetComponent<Rigidbody>().AddForce(InstantiatedBall.transform.forward * 4, ForceMode.Impulse);
-
-        }    
+            ShootBall();
+        }
     }
 
-    private void delayforInput()
+
+
+    private void ShootBall()
+    {
+        InstantiatedBall.transform.GetChild(0).gameObject.SetActive(false);
+        InstantiatedBall.GetComponent<Rigidbody>().AddForce(InstantiatedBall.transform.forward * 4, ForceMode.Impulse);
+    }
+
+    #region AR objects placement in real world
+    private void PlaceBall()
+    {
+        InstantiatedBall = Instantiate(ballPrefab, PlacementIndicator.transform.position, PlacementIndicator.transform.rotation);
+        InstantiatedBall.transform.LookAt(InstantiatedPlayGround.transform.GetChild(0));
+    }
+
+    private void PlacePlayGround()
+    {
+        InstantiatedPlayGround = Instantiate(PlayGroundPrefab, PlacementIndicator.transform.position, PlacementIndicator.transform.rotation);
+    }
+    #endregion
+
+    #region Hints
+    private void HideHints()
+    {
+        TransparentBall.SetActive(false);
+        TapToPlaceBallTxt.SetActive(false);
+        PlacementIndicator.gameObject.SetActive(false);
+    }
+
+    private void ShowHints()
+    {
+        if (!TransparentBall.activeInHierarchy)
+            TransparentBall.SetActive(true);
+
+        if (!TapToPlaceBallTxt.activeInHierarchy)
+            TapToPlaceBallTxt.SetActive(true);
+    } 
+    #endregion
+
+    private void PlayGroundTransformUI(bool showState)
+    {
+        ScaleSlider.SetActive(showState);
+        RotationSlider.SetActive(showState);
+    }
+
+
+    private void SetCanShoot()
     {
         canShoot = true;
     }
