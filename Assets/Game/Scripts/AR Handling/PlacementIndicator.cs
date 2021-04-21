@@ -6,7 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 
 public class PlacementIndicator : MonoBehaviour
 {
-
+    [SerializeField] ObjectSpawner ObjectSpawner;
     private ARRaycastManager aRRaycastManager;
     private GameObject placementIndicator;
     void Start()
@@ -29,11 +29,16 @@ public class PlacementIndicator : MonoBehaviour
 
         if (hits.Count > 0)
         {
+            ObjectSpawner.isPlaneDetected = true;
             this.transform.position = hits[0].pose.position;
             this.transform.rotation = hits[0].pose.rotation;
 
             if (!placementIndicator.activeInHierarchy)
                 placementIndicator.SetActive(true);
+        }
+        else
+        {
+            ObjectSpawner.isPlaneDetected = false;
         }
     }
 }
