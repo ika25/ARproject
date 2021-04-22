@@ -33,6 +33,7 @@ public class ObjectSpawner : MonoBehaviour
     bool isPlayGroundPlaced = false;
     bool isBallPlaced = false;
     bool canShoot = false;
+    bool canInput = true;
     //bool PlayGroundTransformSet = false;
     //bool isDecided = false;
     void Start()
@@ -42,18 +43,21 @@ public class ObjectSpawner : MonoBehaviour
 
     void Update()
     {
-        fingerTouched = Input.GetMouseButtonDown(0); /*Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began;*/
-        fingerReleased = Input.GetMouseButtonUp(0);
-
-
-        if (fingerReleased)
+        if (canInput)
         {
-            FingerReleasedEvent.Raise();
-        }
+            fingerTouched = Input.GetMouseButtonDown(0); /*Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began;*/
+            fingerReleased = Input.GetMouseButtonUp(0);
 
-        if (fingerTouched)
-        {
-            FingerTouhcedEvent.Raise();
+
+            if (fingerReleased)
+            {
+                FingerReleasedEvent.Raise();
+            }
+
+            if (fingerTouched)
+            {
+                FingerTouhcedEvent.Raise();
+            } 
         }
 
 
@@ -172,6 +176,7 @@ public class ObjectSpawner : MonoBehaviour
 
     public void PlayGroundTransformUI(bool showState)
     {
+        canInput = !showState;
         PlacementIndicator.gameObject.SetActive(false);
         ScaleSlider.SetActive(showState);
         RotationSlider.SetActive(showState);
