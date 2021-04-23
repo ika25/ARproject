@@ -60,7 +60,7 @@ public class ObjectSpawner : MonoBehaviour
             } 
         }
 
-
+        #region old method, kept for the record
         //if (!isPlayGroundPlaced)
         //{
 
@@ -106,7 +106,8 @@ public class ObjectSpawner : MonoBehaviour
         //    {
         //        ShootBall();
         //    }
-        //}
+        //} 
+        #endregion
     }
 
     public void DecideShootState()

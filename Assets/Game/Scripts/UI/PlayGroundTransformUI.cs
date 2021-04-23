@@ -29,17 +29,25 @@ public class PlayGroundTransformUI : MonoBehaviour
     }
     public void Scale()
     {
+        if(playGround == null)
+        {
+            playGround = ObjectSpawner.InstantiatedPlayGround.transform; ;
+        }
         playGroundScale = scaleSlider.value * Vector3.one * 2;
         scaletxt.text = playGroundScale.ToString();
-        ObjectSpawner.InstantiatedPlayGround.transform.localScale = playGroundScale;
+        playGround.localScale = playGroundScale;
     }
 
     public void Rotate()
     {
+        if (playGround == null)
+        {
+            playGround = ObjectSpawner.InstantiatedPlayGround.transform; ;
+        }
         playGroundRotation = rotationSlider.value * 360 * Mathf.Deg2Rad;
         rotSign = (int)((playGroundRotation - prevRotValue) / (Mathf.Abs(playGroundRotation - prevRotValue)));
         rottxt.text = (rotSign * playGroundRotation).ToString();
-        ObjectSpawner.InstantiatedPlayGround.transform.Rotate(ObjectSpawner.InstantiatedPlayGround.transform.up, playGroundRotation * rotSign);
+        playGround.Rotate(playGround.up, playGroundRotation * rotSign);
         prevRotValue = playGroundRotation;
     }
 }
