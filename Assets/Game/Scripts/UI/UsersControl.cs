@@ -7,6 +7,7 @@ public class UsersControl : MonoBehaviour
 {
     [SerializeField] GameObject PlayButton;
     [SerializeField] Dropdown UsersDropDown;
+    [SerializeField] Text UserAlreadyExistsText;
 
     [SerializeField] Toggle newUserToggle;
     [SerializeField] Toggle existingUserToggle;
@@ -22,9 +23,9 @@ public class UsersControl : MonoBehaviour
     private void Start()
     {
         //PlayerPrefs.DeleteAll();
-        //if(UserNamesList != null)
-        //UserNamesList.UserNames.Clear();
-        if(UsersDropDown != null)
+        //if (UserNamesList != null)
+        //    UserNamesList.UserNames.Clear();
+        if (UsersDropDown != null)
         UsersDropDown.onValueChanged.AddListener((int users) => currentUser = UsersDropDown.options[UsersDropDown.value].text);
         if(CurrentUserText != null)
         CurrentUserText.text = currentUser;
@@ -54,14 +55,27 @@ public class UsersControl : MonoBehaviour
 
     private void LoadUserNames()
     {
+        bool isNewUser = true;
         foreach (var user in UserNamesList.UserNames)
         {
-            if(!PlayerPrefs.HasKey(user))
+            //if(!PlayerPrefs.HasKey(user))
+            //{
+            //    PlayerPrefs.SetInt(user, 0);
+            //}
+            if(!UserNamesList.userScores.ContainsKey(user))
             {
-                PlayerPrefs.SetInt(user, 0);
+                UserNamesList.userScores.Add(user, 0);
             }
+            
             Dropdown.OptionData newUser = new Dropdown.OptionData(user);
-            if (!UsersDropDown.options.Contains(newUser))
+            foreach (var existinguser in UsersDropDown.options)
+            {
+                if(existinguser.text == newUser.text)
+                {
+                    isNewUser = false;
+                }
+            }
+            if (isNewUser)
             {
                 UsersDropDown.options.Add(newUser);
             }
@@ -70,11 +84,15 @@ public class UsersControl : MonoBehaviour
 
     public void SaveNewUser(InputField newUserNameIF)
     {
-        if(!PlayerPrefs.HasKey(newUserNameIF.text))
+        if(!UserNamesList.userScores.ContainsKey(newUserNameIF.text))//PlayerPrefs.HasKey(newUserNameIF.text))
         {
-            PlayerPrefs.SetInt(newUserNameIF.text, 0);
             UserNamesList.UserNames.Add(newUserNameIF.text);
+            UserNamesList.userScores.Add(newUserNameIF.text, 0);
             currentUser = newUserNameIF.text;
+        }
+        else
+        {
+            UserAlreadyExistsText.gameObject.SetActive(true);
         }
     }
 

@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3071e9cb388f89846be0026e5bd79710, type: 3}
   m_Name: User names
   m_EditorClassIdentifier: 
-  UserNames: []
+  UserNames:
+  - karam
+  - m
+  - i
