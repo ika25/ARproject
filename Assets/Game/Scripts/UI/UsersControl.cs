@@ -15,9 +15,9 @@ public class UsersControl : MonoBehaviour
     [SerializeField] GameObject NewUserInput;
 
 
-    [SerializeField] UserNames_SoList UserNamesList;
+    [SerializeField] public UserNames_SoList UserNamesList;
     [SerializeField] Text CurrentUserText;
-
+    [SerializeField] public Text Score;
     public static string currentUser;
 
     private void Start()
