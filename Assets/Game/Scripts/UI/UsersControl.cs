@@ -15,11 +15,19 @@ public class UsersControl : MonoBehaviour
 
 
     [SerializeField] UserNames_SoList UserNamesList;
+    [SerializeField] Text CurrentUserText;
+
+    public static string currentUser;
 
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
-        UserNamesList.UserNames.Clear();
+        //PlayerPrefs.DeleteAll();
+        //if(UserNamesList != null)
+        //UserNamesList.UserNames.Clear();
+        if(UsersDropDown != null)
+        UsersDropDown.onValueChanged.AddListener((int users) => currentUser = UsersDropDown.options[UsersDropDown.value].text);
+        if(CurrentUserText != null)
+        CurrentUserText.text = currentUser;
     }
 
     public void ToggleSet(Toggle toggle)
@@ -38,6 +46,7 @@ public class UsersControl : MonoBehaviour
                 UsersDropDown.gameObject.SetActive(true);
                 PlayButton.SetActive(true);
                 NewUserInput.SetActive(false);
+                currentUser = UsersDropDown.options[UsersDropDown.value].text;
             }
         }
     }
@@ -65,7 +74,13 @@ public class UsersControl : MonoBehaviour
         {
             PlayerPrefs.SetInt(newUserNameIF.text, 0);
             UserNamesList.UserNames.Add(newUserNameIF.text);
+            currentUser = newUserNameIF.text;
         }
+    }
+
+    public void LoadGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }
 

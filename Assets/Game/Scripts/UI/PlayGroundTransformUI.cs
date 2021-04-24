@@ -23,10 +23,10 @@ public class PlayGroundTransformUI : MonoBehaviour
 
     int rotSign;
 
-    private void Start()
-    {
-        playGround = ObjectSpawner.InstantiatedPlayGround.transform;
-    }
+    //private void Start()
+    //{
+    //    playGround = ObjectSpawner.InstantiatedPlayGround.transform;
+    //}
     public void Scale()
     {
         if(playGround == null)
