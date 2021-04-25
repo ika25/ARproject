@@ -120,7 +120,7 @@ public class ObjectSpawner : MonoBehaviour
         if (canShoot)
         {
             InstantiatedBall.transform.GetChild(0).gameObject.SetActive(false);
-            InstantiatedBall.GetComponent<Rigidbody>().AddForce(InstantiatedBall.transform.forward * 4, ForceMode.Impulse);
+            InstantiatedBall.GetComponent<Rigidbody>().AddForce(InstantiatedBall.transform.forward * 3.5f, ForceMode.Impulse);
             isBallPlaced = false;
             canShoot = false;
             //BallShotEvent.Raise();

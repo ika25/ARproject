@@ -42,9 +42,9 @@ public class SwipeInputManager : MonoBehaviour
         }
         return Vector3.zero;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(ThrowDirection, 0.05f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(ThrowDirection, 0.05f);
+    //}
 }

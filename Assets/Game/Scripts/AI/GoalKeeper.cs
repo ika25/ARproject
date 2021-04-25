@@ -16,8 +16,8 @@ public class GoalKeeper : MonoBehaviour
 
     private void KeeperMove()
     {
-        this.transform.position = Vector3.MoveTowards(this.transform.position, WayPoints[currentWayPointIndex].localPosition, speed);
-        if(Vector3.Distance(this.transform.position,WayPoints[currentWayPointIndex].localPosition) < 0.01f)
+        this.transform.position = Vector3.MoveTowards(this.transform.position, WayPoints[currentWayPointIndex].position, speed);
+        if(Vector3.Distance(this.transform.position,WayPoints[currentWayPointIndex].position) < 0.01f)
         {
             currentWayPointIndex++;
             currentWayPointIndex %= (WayPoints.Count);

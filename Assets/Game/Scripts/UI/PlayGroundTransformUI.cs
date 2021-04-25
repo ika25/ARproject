@@ -10,8 +10,8 @@ public class PlayGroundTransformUI : MonoBehaviour
     [SerializeField] Slider scaleSlider;
     [SerializeField] Slider rotationSlider;
 
-    [SerializeField] Text scaletxt;
-    [SerializeField] Text rottxt;
+    //[SerializeField] Text scaletxt;
+    //[SerializeField] Text rottxt;
 
 
     Transform playGround;
@@ -34,7 +34,7 @@ public class PlayGroundTransformUI : MonoBehaviour
             playGround = ObjectSpawner.InstantiatedPlayGround.transform; ;
         }
         playGroundScale = scaleSlider.value * Vector3.one * 2;
-        scaletxt.text = playGroundScale.ToString();
+        //scaletxt.text = playGroundScale.ToString();
         playGround.localScale = playGroundScale;
     }
 
@@ -46,7 +46,7 @@ public class PlayGroundTransformUI : MonoBehaviour
         }
         playGroundRotation = rotationSlider.value * 360 * Mathf.Deg2Rad;
         rotSign = (int)((playGroundRotation - prevRotValue) / (Mathf.Abs(playGroundRotation - prevRotValue)));
-        rottxt.text = (rotSign * playGroundRotation).ToString();
+        //rottxt.text = (rotSign * playGroundRotation).ToString();
         playGround.Rotate(playGround.up, playGroundRotation * rotSign);
         prevRotValue = playGroundRotation;
     }

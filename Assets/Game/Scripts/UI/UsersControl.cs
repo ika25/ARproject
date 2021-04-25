@@ -17,30 +17,45 @@ public class UsersControl : MonoBehaviour
 
     [SerializeField] public UserNames_SoList UserNamesList;
     [SerializeField] Text CurrentUserText;
-    [SerializeField] public Text Score;
+    [SerializeField] Text Score;
     public static string currentUser;
+    public static int currentScore;
 
     private void Start()
     {
-        //PlayerPrefs.DeleteAll();
-        //if (UserNamesList != null)
-        //    UserNamesList.UserNames.Clear();
+        if (UserNamesList != null)
+        {
+            if (UserNamesList.isFirstRun)
+            {
+                UserNamesList.isFirstRun = false;
+                PlayerPrefs.DeleteAll();
+                UserNamesList.userScores = new Dictionary<string, int>();
+                UserNamesList.UserNames.Clear();
+                UserNamesList.userScores.Clear();
+            }
+        }
+
         if (UsersDropDown != null)
-        UsersDropDown.onValueChanged.AddListener((int users) => currentUser = UsersDropDown.options[UsersDropDown.value].text);
-        if(CurrentUserText != null)
-        CurrentUserText.text = currentUser;
+            UsersDropDown.onValueChanged.AddListener((int users) => currentUser = UsersDropDown.options[UsersDropDown.value].text);
+
+        if (CurrentUserText != null)
+            CurrentUserText.text = currentUser;
+
+        if (UserNamesList != null)
+            currentScore = UserNamesList.userScores[currentUser];
+
     }
 
     public void ToggleSet(Toggle toggle)
     {
-        if(toggle.isOn)
+        if (toggle.isOn)
         {
-            if(toggle == newUserToggle)
+            if (toggle == newUserToggle)
             {
                 NewUserInput.SetActive(true);
                 UsersDropDown.gameObject.SetActive(false);
             }
-            if(toggle == existingUserToggle)
+            if (toggle == existingUserToggle)
             {
                 LoadUserNames();
 
@@ -62,15 +77,15 @@ public class UsersControl : MonoBehaviour
             //{
             //    PlayerPrefs.SetInt(user, 0);
             //}
-            if(!UserNamesList.userScores.ContainsKey(user))
+            if (!UserNamesList.userScores.ContainsKey(user))
             {
                 UserNamesList.userScores.Add(user, 0);
             }
-            
+
             Dropdown.OptionData newUser = new Dropdown.OptionData(user);
             foreach (var existinguser in UsersDropDown.options)
             {
-                if(existinguser.text == newUser.text)
+                if (existinguser.text == newUser.text)
                 {
                     isNewUser = false;
                 }
@@ -84,7 +99,7 @@ public class UsersControl : MonoBehaviour
 
     public void SaveNewUser(InputField newUserNameIF)
     {
-        if(!UserNamesList.userScores.ContainsKey(newUserNameIF.text))//PlayerPrefs.HasKey(newUserNameIF.text))
+        if (!UserNamesList.userScores.ContainsKey(newUserNameIF.text))//PlayerPrefs.HasKey(newUserNameIF.text))
         {
             UserNamesList.UserNames.Add(newUserNameIF.text);
             UserNamesList.userScores.Add(newUserNameIF.text, 0);
@@ -99,6 +114,18 @@ public class UsersControl : MonoBehaviour
     public void LoadGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+
+    public void UpdateScoreText()
+    {
+        if (Score != null)
+            Score.text = currentScore.ToString();
     }
 }
 
