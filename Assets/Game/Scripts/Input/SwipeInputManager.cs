@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Script for handling the user's touch input
+/// </summary>
+
 public class SwipeInputManager : MonoBehaviour
 {
 
@@ -10,41 +15,37 @@ public class SwipeInputManager : MonoBehaviour
     Vector3 ThrowDirection;
     void Start()
     {
-        ThrowDirection = Vector3.zero;
+        ThrowDirection = Vector3.zero; //initial ball throw direction
     }
 
     void Update()
     {
 
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) //this works for both mouse buttons and finger touches
         {
-            RotateBall();
+            RotateBall(); //rotate ball when a finger is holding on the screen
         }
 
     }
 
+
+    /// <summary>
+    /// Rotates the ball according to the user's touch position projected on the game's world space
+    /// </summary>
     private void RotateBall()
     {
-        ThrowDirection = GetSecondPoint();
+        ThrowDirection = GetSecondPoint(); //get the projection of the user's touch position on the game's world space
 
-        objectSpawner.InstantiatedBall.transform.LookAt(ThrowDirection);
+        objectSpawner.InstantiatedBall.transform.LookAt(ThrowDirection); //rotate the ball according the touch point
     }
 
     private Vector3 GetSecondPoint()
     {
-        Ray camRay = ARCam.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(camRay, out RaycastHit hit))
+        Ray camRay = ARCam.ScreenPointToRay(Input.mousePosition); //raycast from the mobile cam at the user's touch position on the screen
+        if (Physics.Raycast(camRay, out RaycastHit hit)) //if any thing is hit (found by the raycast)
         {
-            //if(hit.collider.CompareTag("Ground"))
-            {
-                return hit.point;
-            }
+            return hit.point; //return the hit point in the game's world space
         }
-        return Vector3.zero;
+        return Vector3.zero; //if not, return the default ball rotation
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawSphere(ThrowDirection, 0.05f);
-    //}
 }
